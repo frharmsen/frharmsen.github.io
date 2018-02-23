@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="format-detection" content="telephone=no">
+<title>Score Keeper - Scores</title>
+<style>
+table, th, td {
+	border: 1px solid black;
+}
+
+table {
+	width: 100%
+}
+
+td {
+	text-align: right;
+}
+
+a {
+	text-decoration: none;
+}
+
+input {
+	width: 100%;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+</style>
+</head>
+<body>
+	<header>
+		<h1>Score Keeper - Scores</h1>
+	</header>
+	<div id="main">
+		<form method="get" action="scores.html">
+			<table id="table">
+			</table>
+			<input type="submit" value="Update" id="submitButton">
+		</form>
+	</div>
+	<script src="urlparams.js"></script>
+	<script src="logger.js"></script>
+	<script>
+		"use strict";
+		var numberOfPlayers = 0;
+		var playerNames = [];
+		var scores = [ [] ];
+		var playerWithTurn = 0;
+
+		function saveToStorage() {
+			logger.trace("Entering saveToStorage.");
+			if (window.localStorage) {
+				window.localStorage.setItem("ScoreKeeper.numberOfPlayers",
+						numberOfPlayers);
+				window.localStorage.setItem("ScoreKeeper.playerNames", JSON
+						.stringify(playerNames));
+				window.localStorage.setItem("ScoreKeeper.playerWithTurn",
+						playerWithTurn);
+				window.localStorage.setItem("ScoreKeeper.scores", JSON
+						.stringify(scores));
+			}
+			logger.trace("Exiting saveToStorage.");
+		}
+
+		function recallFromStorage() {
+			logger.trace("Entering recallFromStorage.");
+			if (window.localStorage
+					&& window.localStorage
+							.getItem("ScoreKeeper.numberOfPlayers")) {
+				numberOfPlayers = window.localStorage
+						.getItem("ScoreKeeper.numberOfPlayers");
+				playerNames = JSON.parse(window.localStorage
+						.getItem("ScoreKeeper.playerNames"));
+				playerWithTurn = window.localStorage
+						.getItem("ScoreKeeper.playerWithTurn");
+				scores = JSON.parse(window.localStorage
+						.getItem("ScoreKeeper.scores"));
+			}
+			logger.trace("Exiting recallFromStorage.");
+		}
+
+		function getTotalScore(player) {
+			logger.trace("Entering getTotalScore.");
+			var totalScore = 0;
+
+			for (var i = 0; i < scores.length; i += 1) {
+				if (player < scores[i].length) {
+					totalScore += Number(scores[i][player]);
+				}
+			}
+
+			logger.trace("Exiting getTotalScore.");
+			return totalScore;
+		}
+
+		function createFooterRow() {
+			logger.trace("Entering createFooterRow.");
+			var rowElement = document.createElement("tr");
+			var columnElement;
+			var textNode;
+
+			for (var i = 0; i < numberOfPlayers; i += 1) {
+				textNode = document.createTextNode(getTotalScore(i));
+				columnElement = document.createElement("td");
+				columnElement.appendChild(textNode);
+				rowElement.appendChild(columnElement);
+			}
+
+			logger.trace("Exiting createFooterRow.");
+			return rowElement;
+		}
+
+		function createDataRow(row) {
+			logger.trace("Entering createDataRow.");
+			var rowElement = document.createElement("tr");
+			var columnElement;
+			var anchorElement;
+			var textNode;
+			var inputElement;
+			var url;
+			var completeRow = (row < (scores.length - 1));
+
+			for (var i = 0; i < numberOfPlayers; i += 1) {
+				columnElement = document.createElement("td");
+				columnElement.style.width = (1.0 / numberOfPlayers).toFixed(2)
+						+ "%";
+				if (completeRow || (i < playerWithTurn)) {
+					anchorElement = document.createElement("a");
+					url = "edit.html?round=" + (row + 1) + "&player=" + i;
+					anchorElement.setAttribute("href", url);
+					textNode = document.createTextNode(scores[row][i]);
+					anchorElement.appendChild(textNode);
+					columnElement.appendChild(anchorElement);
+				} else if (i == playerWithTurn) {
+					inputElement = document.createElement("input");
+					inputElement.setAttribute("type", "number");
+					inputElement.setAttribute("name", "scoreInput");
+					inputElement.setAttribute("id", "scoreInput");
+					columnElement.appendChild(inputElement);
+				} else {
+					textNode = document.createTextNode("");
+					columnElement.appendChild(textNode);
+				}
+				rowElement.appendChild(columnElement);
+			}
+
+			logger.trace("Exiting createDataRow.");
+			return rowElement;
+		}
+
+		function createHeaderRow() {
+			logger.trace("Entering createHeaderRow.");
+			var rowElement = document.createElement("tr");
+			var columnElement;
+			var textNode;
+
+			for (var i = 0; i < playerNames.length; i += 1) {
+				columnElement = document.createElement("th");
+				textNode = document.createTextNode(playerNames[i]);
+				columnElement.appendChild(textNode);
+				rowElement.appendChild(columnElement);
+			}
+
+			logger.trace("Exiting createHeaderRow.");
+			return rowElement;
+		}
+
+		function updateTable(event) {
+			logger.trace("Entering updateTable.");
+			var tableElement = document.getElementById("table");
+			var tbodyElement = table.children[1];
+			var tfootElement = table.children[2];
+			var rowElement = tbodyElement.lastChild;
+			var columnElements = rowElement.children;
+			var inputElement = columnElements[playerWithTurn].firstChild;
+			var value = parseInt(inputElement.value, 10);
+			var round = scores.length - 1;
+
+			if (!(Number.isNaN(value))) {
+				scores[round][playerWithTurn] = value;
+				tbodyElement.removeChild(rowElement);
+				if (++playerWithTurn > (numberOfPlayers - 1)) {
+					playerWithTurn = 0;
+					scores.push([]);
+					tbodyElement.appendChild(createDataRow(round));
+					tbodyElement.appendChild(createDataRow(round + 1));
+				} else {
+					tbodyElement.appendChild(createDataRow(round));
+				}
+				tfootElement.removeChild(tfootElement.firstChild);
+				tfootElement.appendChild(createFooterRow());
+			}
+
+			saveToStorage();
+			logger.trace("Exiting updateTable.");
+			event.preventDefault();
+			return false;
+		}
+
+		function drawTables() {
+			logger.trace("Entering drawTables.");
+			var tableElement = document.getElementById("table");
+			var theadElement = document.createElement("thead");
+			var tbodyElement = document.createElement("tbody");
+			var tfootElement = document.createElement("tfoot");
+
+			tableElement.appendChild(theadElement);
+			tableElement.appendChild(tbodyElement);
+			tableElement.appendChild(tfootElement);
+
+			theadElement.appendChild(createHeaderRow());
+			for (var i = 0; i < scores.length - 1; i += 1) {
+				tbodyElement.appendChild(createDataRow(i));
+			}
+			tbodyElement.appendChild(createDataRow(scores.length - 1));
+			tfootElement.appendChild(createFooterRow());
+			logger.trace("Exiting drawTables.");
+		}
+
+		function initVariables() {
+			logger.trace("Entering initVariables.");
+			if ("numberOfPlayers" in urlParams) {
+				logger.info("Starting a new game...");
+				numberOfPlayers = urlParams.numberOfPlayers;
+				for (var i = 0; i < numberOfPlayers; i += 1) {
+					playerNames.push(urlParams["playerName" + i]);
+				}
+				playerWithTurn = 0;
+				scores = [ [] ];
+				saveToStorage();
+			}
+			if ("score" in urlParams) {
+				logger.info("Modifying a score...");
+				recallFromStorage();
+				scores[Number(urlParams.round - 1)][Number(urlParams.player)] = Number(urlParams.score);
+			} else {
+				logger.info("Continuing a game...");
+				recallFromStorage();
+			}
+			logger.trace("Exiting initVariables.");
+		}
+
+		function init() {
+			logger.trace("Entering init.");
+			var submitButtonElement = document.getElementById("submitButton");
+
+			initVariables();
+			drawTables();
+			submitButtonElement.addEventListener("click", updateTable);
+			logger.trace("Exiting init.");
+		}
+
+		logger.state.module = "score.html";
+		logger.state.level = logger.levels.TRACE;
+		window.addEventListener("load", init);
+	</script>
+</body>
+</html>

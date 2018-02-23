@@ -7,6 +7,7 @@ index.html: ../index.py index.csv
 
 all:
 	python ../index.py index.csv index.html $(TITLE)
+	make -C apps all
 	make -C latex all
 	make -C linux all
 	make -C privacy all

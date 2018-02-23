@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="format-detection" content="telephone=no">
+<title>Score Keeper - Player Names</title>
+</head>
+<body>
+	<header>
+		<h1>Score Keeper - Player Names</h1>
+	</header>
+	<div id="main">
+		Enter the names of the players for this game:
+		<p>
+		<form method="get" action="scores.html">
+			<input type="hidden" name="numberOfPlayers" id="numberOfPlayers">
+			<table id="table">
+			</table>
+			<input type="submit" value="ENTER">
+		</form>
+	</div>
+	<script src="urlparams.js"></script>
+	<script>
+		function createRow(playerNumber) {
+			"use strict";
+			var rowElement = document.createElement("tr");
+			var columnElement0 = document.createElement("td");
+			var textNode = document.createTextNode("Player "
+					+ (playerNumber + 1));
+			var columnElement1 = document.createElement("td");
+			var inputNode = document.createElement("input");
+
+			rowElement.appendChild(columnElement0);
+			rowElement.appendChild(columnElement1);
+
+			columnElement0.appendChild(textNode);
+			columnElement1.appendChild(inputNode);
+
+			inputNode.setAttribute("type", "text");
+			inputNode.setAttribute("name", "playerName" + playerNumber);
+			inputNode.setAttribute("size", "40");
+
+			return rowElement;
+		}
+
+		function init() {
+			"use strict";
+			var tableElement = document.getElementById("table");
+			var hiddenElement = document.getElementById("numberOfPlayers");
+
+			console.log(urlParams.number_of_players);
+			hiddenElement.value = urlParams.numberOfPlayers;
+
+			for (var i = 0; i < urlParams.numberOfPlayers; i += 1) {
+				var row = createRow(i);
+				tableElement.appendChild(row);
+			}
+		}
+
+		window.addEventListener("load", init, false);
+	</script>
+</body>
+</html>

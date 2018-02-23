@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="format-detection" content="telephone=no">
+<title>Score Keeper - Edit Score</title>
+<body>
+	<h1>Score Keeper - Edit Score</h1>
+	<form method="get" action="scores.html">
+		<input type="hidden" name="round" id="round" />
+		<input type="hidden" name="player" id="player" />
+		Enter new score:<br> <input type="text" name="score" size=40><br>
+		<input type="submit" value="Change Score" />
+		<input type="reset" value="Clear"/>
+	</form>
+	<a href="scores.html">BACK</a>
+	<script src="urlparams.js"></script>
+	<script src="logger.js"></script>
+	<script>
+		
+	function init() {
+		logger.trace("Entering init.");
+		var roundElement = document.getElementById("round");
+		var playerElement = document.getElementById("player");
+
+		round.value = urlParams.round;
+		player.value = urlParams.player;
+
+		logger.trace("Exiting init.");
+	}
+
+	logger.state.module = "edit.html";
+	logger.state.level = logger.levels.TRACE;
+	window.addEventListener("load", init);
+	</script>
+</body>
+</html>
