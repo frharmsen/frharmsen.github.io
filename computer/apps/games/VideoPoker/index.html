@@ -78,19 +78,20 @@ table, th, td {
 				</tr>
 				<tr>
 					<td>Draw two cards</td>
-					<td>If you have three of a kind.
+					<td>If you have three of a kind.</td>
 				</tr>
 				<tr>
 					<td>Draw three cards</td>
-					<td>If you have any kind of pair.
+					<td>If you have any kind of pair. If you have an Ace and a
+						Face Card. If you have two Face Cards.</td>
 				</tr>
 				<tr>
 					<td>Draw four cards</td>
-					<td>If you have Ace or Face Card (Jack, Queen of King).
+					<td>If you have an Ace or Face Card (Jack, Queen of King).</td>
 				</tr>
 				<tr>
 					<td>Draw five cards</td>
-					<td>If you do not have an Ace or Face Card.
+					<td>If you do not have an Ace or Face Card.</td>
 				</tr>
 			</table>
 			<table id="payouts">
@@ -251,7 +252,7 @@ table, th, td {
 			for (var i = 0; i < 5; i += 1) {
 				imageElement = document.getElementById("card" + (i + 1));
 				imageElement.setAttribute("src", "images/" + hand.cards[i].rank
-						+ hand.cards[i].suit + ".svg");
+						+ hand.cards[i].suit + ".png");
 			}
 		}
 
