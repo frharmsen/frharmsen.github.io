@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Video Poker</title>
+<style>
+td {
+	text-align: center;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+#help {
+	overflow: hidden;
+}
+
+#hints {
+	width: 45%;
+	float: left;
+}
+
+#payouts {
+	width: 45%;
+	float: right;
+}
+</style>
+</head>
+<body>
+	<header>
+		<h1>Video Poker</h1>
+	</header>
+	<div id="main">
+		<p>
+			Balance: <span id="balance"></span> <span id="result"></span>
+		</p>
+		<form method="post" action="index.html">
+			<table id="table">
+				<tr>
+					<td><img id="card1" src=""></td>
+					<td><img id="card2" src=""></td>
+					<td><img id="card3" src=""></td>
+					<td><img id="card4" src=""></td>
+					<td><img id="card5" src=""></td>
+				</tr>
+				<tr id="checkBoxRow">
+					<td id="keep"><label for="checkbox1">Keep: </label><input
+						type="checkbox" name="checkbox1" id="checkbox1" /></td>
+					<td id="keep"><label for="checkbox2">Keep: </label><input
+						type="checkbox" name="checkbox2" id="checkbox2" /></td>
+					<td id="keep"><label for="checkbox3">Keep: </label><input
+						type="checkbox" name="checkbox3" id="checkbox3" /></td>
+					<td id="keep"><label for="checkbox4">Keep: </label><input
+						type="checkbox" name="checkbox4" id="checkbox4" /></td>
+					<td id="keep"><label for="checkbox5">Keep: </label><input
+						type="checkbox" name="checkbox5" id="checkbox5" /></td>
+				</tr>
+			</table>
+			<input type="submit" value="DRAW" id="submitButton">
+		</form>
+		<p>
+		<div id="help">
+			<table id="hints">
+				<caption>Hints</caption>
+				<tr>
+					<td>Draw no cards</td>
+
+					<td>If you have a Royal Flush, Straight Flush, Full House,
+						Straight or Flush.</td>
+				</tr>
+				<tr>
+					<td>Draw one card</td>
+					<td>If you have four cards of a Royal Flush, Straight Flush or
+						Flush. If you have four cards of a Straight but not an Inside
+						Straight or a One-Sided Straight. If you have Four of a Kind or
+						Two Pair.</td>
+				</tr>
+				<tr>
+					<td>Draw two cards</td>
+					<td>If you have three of a kind.
+				</tr>
+				<tr>
+					<td>Draw three cards</td>
+					<td>If you have any kind of pair.
+				</tr>
+				<tr>
+					<td>Draw four cards</td>
+					<td>If you have Ace or Face Card (Jack, Queen of King).
+				</tr>
+				<tr>
+					<td>Draw five cards</td>
+					<td>If you do not have an Ace or Face Card.
+				</tr>
+			</table>
+			<table id="payouts">
+				<caption>Payouts</caption>
+				<tr>
+					<td>Jacks or Better</td>
+					<td>10.00</td>
+				<tr>
+				<tr>
+					<td>Two Pair</td>
+					<td>20.00</td>
+				<tr>
+				<tr>
+					<td>Three of a Kind</td>
+					<td>30.00</td>
+				<tr>
+				<tr>
+					<td>Straight</td>
+					<td>40.00</td>
+				<tr>
+				<tr>
+					<td>Flush</td>
+					<td>60.00</td>
+				<tr>
+				<tr>
+					<td>Full House</td>
+					<td>90.00</td>
+				<tr>
+				<tr>
+					<td>Four of a Kind</td>
+					<td>250.00</td>
+				<tr>
+				<tr>
+					<td>Straight Flush</td>
+					<td>500.00</td>
+				<tr>
+				<tr>
+					<td>Royal Flush</td>
+					<td>8000.00</td>
+				<tr>
+			</table>
+		</div>
+	</div>
+	<script src="card.js"></script>
+	<script src="hand.js"></script>
+	<script>
+		"use strict";
+		const WAITING_FOR_DRAW = 0;
+		const WAITING_FOR_DEAL = 1;
+		var deck = [];
+		var hand;
+		var balance = 990;
+		var state = WAITING_FOR_DRAW;
+
+		function clearResult(result) {
+			var resultSpanElement = document.getElementById("result");
+			var textNode = resultSpanElement.firstChild;
+			if (textNode) {
+				resultSpanElement.removeChild(textNode);
+			}
+		}
+
+		function showResult(result) {
+			var resultSpanElement = document.getElementById("result");
+			var textNode = document
+					.createTextNode(Hand.WINNINGS_STRINGS[result]);
+			resultSpanElement.appendChild(textNode);
+		}
+
+		function showBalance(change) {
+			var balanceSpanElement = document.getElementById("balance");
+			var textNode;
+
+			if (balanceSpanElement.firstChild) {
+				balanceSpanElement.removeChild(balanceSpanElement.firstChild);
+			}
+			balance += change;
+			textNode = document.createTextNode(balance.toFixed(2));
+			balanceSpanElement.appendChild(textNode);
+		}
+
+		function shuffleDeck() {
+			Card.shuffleCards(deck);
+		}
+
+		function sortHand() {
+			hand.cards.sort(function(card1, card2) {
+				return card1.order - card2.order;
+			});
+		}
+
+		function returnDealtCardsToDeck() {
+			for (var i = 0; i < deck.length; i += 1) {
+				deck[i].dealt = false;
+				deck[i].kept = false;
+			}
+		}
+
+		function dealHand() {
+			var cards = [];
+
+			for (var i = 0; i < 5; i += 1) {
+				cards.push(deck[i]);
+				deck[i].dealt = true;
+			}
+
+			hand = new Hand(cards);
+			sortHand();
+		}
+
+		function clearCheckboxes() {
+			var checkbox;
+			for (var i = 0; i < hand.cards.length; i += 1) {
+				checkbox = document.getElementById("checkbox" + (i + 1));
+				checkbox.checked = false;
+			}
+		}
+
+		function setCheckboxesHidden(hidden) {
+			var submitButtonElement = document.getElementById("checkBoxRow");
+			if (hidden) {
+				submitButtonElement.style.visibility = "hidden";
+			} else {
+				submitButtonElement.style.visibility = "visible";
+			}
+		}
+
+		function readCheckboxes() {
+			var checkbox;
+			for (var i = 0; i < hand.cards.length; i += 1) {
+				checkbox = document.getElementById("checkbox" + (i + 1));
+				hand.cards[i].kept = checkbox.checked;
+			}
+		}
+
+		function updateSubmitButton(label) {
+			var submitButtonElement = document.getElementById("submitButton");
+			submitButtonElement.value = label;
+		}
+
+		function replaceCardsNotKept() {
+			for (var i = 0; i < hand.cards.length; i += 1) {
+				if (!(hand.cards[i].kept)) {
+					for (var j = 0; j < deck.length; j += 1) {
+						if (!(deck[j].dealt)) {
+							deck[j].dealt = true;
+							hand.cards[i] = deck[j];
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		function showHand() {
+			var imageElement;
+
+			for (var i = 0; i < 5; i += 1) {
+				imageElement = document.getElementById("card" + (i + 1));
+				imageElement.setAttribute("src", "images/" + hand.cards[i].rank
+						+ hand.cards[i].suit + ".svg");
+			}
+		}
+
+		/*
+		 * Change to read kept from checkboxes and reset checkboxes to clear.
+		 */
+		function updateHand(event) {
+			var result;
+
+			if (state === WAITING_FOR_DRAW) {
+				readCheckboxes();
+				replaceCardsNotKept();
+				sortHand();
+				showHand();
+				result = hand.getWinnings();
+				showResult(result);
+				showBalance(Hand.WINNINGS_VALUES[result]);
+				updateSubmitButton("DEAL");
+				setCheckboxesHidden(true);
+				state = WAITING_FOR_DEAL;
+			} else {
+				returnDealtCardsToDeck();
+				shuffleDeck();
+				dealHand();
+				showHand();
+				updateSubmitButton("DRAW");
+				clearCheckboxes();
+				setCheckboxesHidden(false);
+				showBalance(-10);
+				clearResult();
+				state = WAITING_FOR_DRAW;
+			}
+
+			event.preventDefault();
+			return false;
+		}
+
+		function initDeck() {
+			for (var i = 0; i < Card.RANKS.length; i += 1) {
+				for (var j = 0; j < Card.SUITS.length; j += 1) {
+					deck.push(new Card(Card.RANKS[i], Card.SUITS[j], i));
+				}
+			}
+		}
+
+		function init() {
+			var submitButtonElement = document.getElementById("submitButton");
+			initDeck();
+			shuffleDeck();
+			dealHand();
+			showHand();
+			showBalance(0);
+			submitButtonElement.addEventListener("click", updateHand);
+		}
+
+		window.addEventListener("load", init);
+	</script>
+</body>
+</html>
