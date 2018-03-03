@@ -8,6 +8,7 @@ index.html: index.py index.csv
 all:
 	python index.py index.csv index.html $(TITLE)
 	make -C computer all
+	make -C family all
 	make -C entertainment all
 	make -C government all
 	make -C health all
