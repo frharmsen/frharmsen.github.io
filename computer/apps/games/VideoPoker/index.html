@@ -38,23 +38,18 @@ table, th, td {
 		<form method="post" action="index.html">
 			<table id="table">
 				<tr>
-					<td><img id="card1" src=""></td>
-					<td><img id="card2" src=""></td>
-					<td><img id="card3" src=""></td>
-					<td><img id="card4" src=""></td>
-					<td><img id="card5" src=""></td>
+					<td><button id="cardButton1"><img id="card1" src=""></button></td>
+					<td><button id="cardButton2"><img id="card2" src=""></button></td>
+					<td><button id="cardButton3"><img id="card3" src=""></button></td>
+					<td><button id="cardButton4"><img id="card4" src=""></button></td>
+					<td><button id="cardButton5"><img id="card5" src=""></button></td>
 				</tr>
 				<tr id="checkBoxRow">
-					<td id="keep"><label for="checkbox1">Keep: </label><input
-						type="checkbox" name="checkbox1" id="checkbox1" /></td>
-					<td id="keep"><label for="checkbox2">Keep: </label><input
-						type="checkbox" name="checkbox2" id="checkbox2" /></td>
-					<td id="keep"><label for="checkbox3">Keep: </label><input
-						type="checkbox" name="checkbox3" id="checkbox3" /></td>
-					<td id="keep"><label for="checkbox4">Keep: </label><input
-						type="checkbox" name="checkbox4" id="checkbox4" /></td>
-					<td id="keep"><label for="checkbox5">Keep: </label><input
-						type="checkbox" name="checkbox5" id="checkbox5" /></td>
+					<td id="keep1">DISCARD</td>
+					<td id="keep2">DISCARD</td>
+					<td id="keep3">DISCARD</td>
+					<td id="keep4">DISCARD</td>
+					<td id="keep5">DISCARD</td>
 				</tr>
 			</table>
 			<input type="submit" value="DRAW" id="submitButton">
@@ -202,29 +197,48 @@ table, th, td {
 			sortHand();
 		}
 
-		function clearCheckboxes() {
-			var checkbox;
-			for (var i = 0; i < hand.cards.length; i += 1) {
-				checkbox = document.getElementById("checkbox" + (i + 1));
-				checkbox.checked = false;
+		function setKeepTextHidden(hidden) {
+			var keepTextElement;
+			var style = hidden ? "hidden" : "visible";
+
+			for (var i = 1; i <= 5; i += 1) {
+				keepTextElement = document.getElementById("keep" + i.toString());
+				keepTextElement.style.visibility = style;
 			}
 		}
 
-		function setCheckboxesHidden(hidden) {
-			var submitButtonElement = document.getElementById("checkBoxRow");
-			if (hidden) {
-				submitButtonElement.style.visibility = "hidden";
+		function refreshKeepText(hidden) {
+			var keepColumnElement;
+			var style = hidden ? "hidden" : "visible";
+
+			for (var i = 1; i <= 5; i += 1) {
+				keepColumnElement = document.getElementById("keep" + i.toString());
+				if (keepColumnElement.firstChild.data = "KEEP") {
+					keepColumnElement.removeChild(keepColumnElement.firstChild);
+					keepColumnElement.appendChild(document.createTextNode("DISCARD"));
+				}
+			}
+		}
+
+		function updateCard(event) {
+			var cardNumber = Number(event.target.id.charAt(event.target.id.length - 1));
+			var keepColumnElement = document.getElementById('keep' + cardNumber.toString());
+			var keepText;
+
+			cardNumber -= 1;
+			if (hand.cards[cardNumber].kept) {
+				hand.cards[cardNumber].kept = false;
+				keepColumnElement.removeChild(keepColumnElement.firstChild);
+				keepColumnElement.appendChild(document.createTextNode("DISCARD"));
 			} else {
-				submitButtonElement.style.visibility = "visible";
+				hand.cards[cardNumber].kept = true;
+				keepColumnElement.removeChild(keepColumnElement.firstChild);
+				keepColumnElement.appendChild(document.createTextNode("KEEP"));
 			}
-		}
-
-		function readCheckboxes() {
-			var checkbox;
-			for (var i = 0; i < hand.cards.length; i += 1) {
-				checkbox = document.getElementById("checkbox" + (i + 1));
-				hand.cards[i].kept = checkbox.checked;
-			}
+			
+			event.preventDefault();
+			return false;
+		
 		}
 
 		function updateSubmitButton(label) {
@@ -256,14 +270,10 @@ table, th, td {
 			}
 		}
 
-		/*
-		 * Change to read kept from checkboxes and reset checkboxes to clear.
-		 */
 		function updateHand(event) {
 			var result;
 
 			if (state === WAITING_FOR_DRAW) {
-				readCheckboxes();
 				replaceCardsNotKept();
 				sortHand();
 				showHand();
@@ -271,7 +281,8 @@ table, th, td {
 				showResult(result);
 				showBalance(Hand.WINNINGS_VALUES[result]);
 				updateSubmitButton("DEAL");
-				setCheckboxesHidden(true);
+				setKeepTextHidden(true);
+				refreshKeepText();
 				state = WAITING_FOR_DEAL;
 			} else {
 				returnDealtCardsToDeck();
@@ -279,8 +290,7 @@ table, th, td {
 				dealHand();
 				showHand();
 				updateSubmitButton("DRAW");
-				clearCheckboxes();
-				setCheckboxesHidden(false);
+				setKeepTextHidden(false);
 				showBalance(-10);
 				clearResult();
 				state = WAITING_FOR_DRAW;
@@ -300,12 +310,17 @@ table, th, td {
 
 		function init() {
 			var submitButtonElement = document.getElementById("submitButton");
+			var cardButtonElement;
 			initDeck();
 			shuffleDeck();
 			dealHand();
 			showHand();
 			showBalance(0);
 			submitButtonElement.addEventListener("click", updateHand);
+			for (var i = 0; i < 5; i += 1) {
+				cardButtonElement = document.getElementById("cardButton" + (i + 1));
+				cardButtonElement.addEventListener("click", updateCard);
+			}
 		}
 
 		window.addEventListener("load", init);
