@@ -25,6 +25,10 @@ table, th, td {
 	width: 45%;
 	float: right;
 }
+
+#submitButton {
+	width: 100%
+}
 </style>
 </head>
 <body>
@@ -36,7 +40,7 @@ table, th, td {
 			Balance: <span id="balance"></span> <span id="result"></span>
 		</p>
 		<form method="post" action="index.html">
-			<table id="table">
+			<table id="cardTable">
 				<tr>
 					<td><button id="cardButton1"><img id="card1" src=""></button></td>
 					<td><button id="cardButton2"><img id="card2" src=""></button></td>
@@ -51,8 +55,10 @@ table, th, td {
 					<td id="keep4">DISCARD</td>
 					<td id="keep5">DISCARD</td>
 				</tr>
+				<tr>
+				<td colspan="5"><input type="submit" value="DRAW" id="submitButton"></td>
+				<tr>
 			</table>
-			<input type="submit" value="DRAW" id="submitButton">
 		</form>
 		<p>
 		<div id="help">
@@ -311,6 +317,7 @@ table, th, td {
 		function init() {
 			var submitButtonElement = document.getElementById("submitButton");
 			var cardButtonElement;
+			
 			initDeck();
 			shuffleDeck();
 			dealHand();
