@@ -3,6 +3,9 @@
  */
 "use strict";
 
+/*
+ * Constructor
+ */
 var Card = function(rank, suit, order) {
 	this.rank = rank;
 	this.suit = suit;
@@ -11,25 +14,15 @@ var Card = function(rank, suit, order) {
 	this.kept = false;
 }
 
-Card.prototype.clone = function() {
-	var clone = new Object(card);
-
-	clone.rank = this.rank;
-	clone.suit = this.suit;
-	clone.order = this.order;
-
-	return card
-};
-
-Card.prototype.toString = function() {
-	return "[" + this.rank + ", " + this.suit + "]";
-};
-
 /*
- * Static fields and methods.
+ * Static fields.
  */
 Card.RANKS = [ "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A" ];
 Card.SUITS = [ "C", "D", "H", "S" ];
+
+/*
+ * Static functions.
+ */
 
 Card.cloneCards = function(cards) {
 	var cardCount = cards.length;
@@ -51,5 +44,22 @@ Card.shuffleCards = function(cards) {
 		cards[target] = cards[i];
 		cards[i] = tmp;
 	}
+};
+
+/*
+ * Instance functions.
+ */
+Card.prototype.clone = function() {
+	var clone = new Object(card);
+
+	clone.rank = this.rank;
+	clone.suit = this.suit;
+	clone.order = this.order;
+
+	return card
+};
+
+Card.prototype.toString = function() {
+	return "[" + this.rank + ", " + this.suit + "]";
 };
 

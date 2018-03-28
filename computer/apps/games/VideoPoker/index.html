@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <title>Video Poker</title>
 <style>
-td {
+body {
+	background: #69f0ae;
+}
+
+td.centered {
 	text-align: center;
 }
 
@@ -19,11 +23,13 @@ table, th, td {
 #hints {
 	width: 45%;
 	float: left;
+	background: #fff59d;
 }
 
 #payouts {
 	width: 45%;
 	float: right;
+	background: #fff59d;
 }
 
 #submitButton {
@@ -42,21 +48,32 @@ table, th, td {
 		<form method="post" action="index.html">
 			<table id="cardTable">
 				<tr>
-					<td><button id="cardButton1"><img id="card1" src=""></button></td>
-					<td><button id="cardButton2"><img id="card2" src=""></button></td>
-					<td><button id="cardButton3"><img id="card3" src=""></button></td>
-					<td><button id="cardButton4"><img id="card4" src=""></button></td>
-					<td><button id="cardButton5"><img id="card5" src=""></button></td>
+					<td><button id="cardButton1">
+							<img id="card1" src="">
+						</button></td>
+					<td><button id="cardButton2">
+							<img id="card2" src="">
+						</button></td>
+					<td><button id="cardButton3">
+							<img id="card3" src="">
+						</button></td>
+					<td><button id="cardButton4">
+							<img id="card4" src="">
+						</button></td>
+					<td><button id="cardButton5">
+							<img id="card5" src="">
+						</button></td>
 				</tr>
 				<tr id="checkBoxRow">
-					<td id="keep1">DISCARD</td>
-					<td id="keep2">DISCARD</td>
-					<td id="keep3">DISCARD</td>
-					<td id="keep4">DISCARD</td>
-					<td id="keep5">DISCARD</td>
+					<td id="keep1" class="centered">DISCARD</td>
+					<td id="keep2" class="centered">DISCARD</td>
+					<td id="keep3" class="centered">DISCARD</td>
+					<td id="keep4" class="centered">DISCARD</td>
+					<td id="keep5" class="centered">DISCARD</td>
 				</tr>
 				<tr>
-				<td colspan="5"><input type="submit" value="DRAW" id="submitButton"></td>
+					<td colspan="5"><input type="submit" value="DRAW"
+						id="submitButton"></td>
 				<tr>
 			</table>
 		</form>
@@ -65,33 +82,55 @@ table, th, td {
 			<table id="hints">
 				<caption>Hints</caption>
 				<tr>
-					<td>Draw no cards</td>
+					<td>Keep all five cards</td>
 
-					<td>If you have a Royal Flush, Straight Flush, Full House,
-						Straight or Flush.</td>
+					<td>If you have a Royal Flush, Straight Flush, Four of a Kind,
+						Full House, Straight or Flush.</td>
 				</tr>
 				<tr>
-					<td>Draw one card</td>
-					<td>If you have four cards of a Royal Flush, Straight Flush or
-						Flush. If you have four cards of a Straight but not an Inside
-						Straight or a One-Sided Straight. If you have Four of a Kind or
-						Two Pair.</td>
+					<td>Keep four cards</td>
+					<td>
+						<ul>
+							<li>If you have four cards of a Royal Flush draw.</li>
+							<li>If you have Two Pair.</li>
+							<li>If you have four cards of a Straight Flush draw and
+								<ul>
+									<li>The Straight Flush has an Face Cards (Jack, Queen of
+										King); or</li>
+									<li>You have no face cards at all.</li>
+								</ul>
+							</li>
+						</ul>
+					</td>
 				</tr>
 				<tr>
-					<td>Draw two cards</td>
-					<td>If you have three of a kind.</td>
+					<td>Keep three cards</td>
+					<td>If you have three of a kind then keep the three matching
+						cards.</td>
 				</tr>
 				<tr>
-					<td>Draw three cards</td>
-					<td>If you have any kind of pair. If you have an Ace and a
-						Face Card. If you have two Face Cards.</td>
+					<td>Keep two cards</td>
+					<td>
+						<ul>
+							<li>If you have pair of Aces or Face Cards.</li>
+							<li>If have a Low Pair and no Aces nor Face Cards at all.</li>
+							<li>If you have two or more Aces or Face Cards then keep two
+								of them.
+								<ul>
+									<li>Keep the two Aces or Face Cards with a matching suit;
+										or</li>
+									<li>Keep the two lowest valued Face Cards.</li>
+								</ul>
+							</li>
+						</ul>
+					</td>
 				</tr>
 				<tr>
-					<td>Draw four cards</td>
-					<td>If you have an Ace or Face Card (Jack, Queen of King).</td>
+					<td>Keep one card</td>
+					<td>If you have an Ace or Face Card.</td>
 				</tr>
 				<tr>
-					<td>Draw five cards</td>
+					<td>Keep no cards</td>
 					<td>If you do not have an Ace or Face Card.</td>
 				</tr>
 			</table>
@@ -147,6 +186,18 @@ table, th, td {
 		var balance = 990;
 		var state = WAITING_FOR_DRAW;
 
+		function showCardsToKeep(cardsToKeep) {
+			var columnElement;
+			for (var i = 0; i < hand.cards.length; i+= 1) {
+				columnElement = document.getElementById("keep" + (i + 1));
+				if (cardsToKeep.indexOf(hand.cards[i]) != -1) {
+					columnElement.style.background  = "#fff59d";	
+				} else {
+					columnElement.style.background  = "#69f0ae";
+				}
+			}
+		}
+		
 		function clearResult(result) {
 			var resultSpanElement = document.getElementById("result");
 			var textNode = resultSpanElement.firstChild;
@@ -208,7 +259,8 @@ table, th, td {
 			var style = hidden ? "hidden" : "visible";
 
 			for (var i = 1; i <= 5; i += 1) {
-				keepTextElement = document.getElementById("keep" + i.toString());
+				keepTextElement = document
+						.getElementById("keep" + i.toString());
 				keepTextElement.style.visibility = style;
 			}
 		}
@@ -218,33 +270,38 @@ table, th, td {
 			var style = hidden ? "hidden" : "visible";
 
 			for (var i = 1; i <= 5; i += 1) {
-				keepColumnElement = document.getElementById("keep" + i.toString());
+				keepColumnElement = document.getElementById("keep"
+						+ i.toString());
 				if (keepColumnElement.firstChild.data = "KEEP") {
 					keepColumnElement.removeChild(keepColumnElement.firstChild);
-					keepColumnElement.appendChild(document.createTextNode("DISCARD"));
+					keepColumnElement.appendChild(document
+							.createTextNode("DISCARD"));
 				}
 			}
 		}
 
 		function updateCard(event) {
-			var cardNumber = Number(event.target.id.charAt(event.target.id.length - 1));
-			var keepColumnElement = document.getElementById('keep' + cardNumber.toString());
+			var cardNumber = Number(event.target.id
+					.charAt(event.target.id.length - 1));
+			var keepColumnElement = document.getElementById('keep'
+					+ cardNumber.toString());
 			var keepText;
 
 			cardNumber -= 1;
 			if (hand.cards[cardNumber].kept) {
 				hand.cards[cardNumber].kept = false;
 				keepColumnElement.removeChild(keepColumnElement.firstChild);
-				keepColumnElement.appendChild(document.createTextNode("DISCARD"));
+				keepColumnElement.appendChild(document
+						.createTextNode("DISCARD"));
 			} else {
 				hand.cards[cardNumber].kept = true;
 				keepColumnElement.removeChild(keepColumnElement.firstChild);
 				keepColumnElement.appendChild(document.createTextNode("KEEP"));
 			}
-			
+
 			event.preventDefault();
 			return false;
-		
+
 		}
 
 		function updateSubmitButton(label) {
@@ -295,6 +352,7 @@ table, th, td {
 				shuffleDeck();
 				dealHand();
 				showHand();
+				showCardsToKeep(hand.getCardsToKeep());
 				updateSubmitButton("DRAW");
 				setKeepTextHidden(false);
 				showBalance(-10);
@@ -317,15 +375,17 @@ table, th, td {
 		function init() {
 			var submitButtonElement = document.getElementById("submitButton");
 			var cardButtonElement;
-			
+
 			initDeck();
 			shuffleDeck();
 			dealHand();
 			showHand();
 			showBalance(0);
+			showCardsToKeep(hand.getCardsToKeep());
 			submitButtonElement.addEventListener("click", updateHand);
 			for (var i = 0; i < 5; i += 1) {
-				cardButtonElement = document.getElementById("cardButton" + (i + 1));
+				cardButtonElement = document.getElementById("cardButton"
+						+ (i + 1));
 				cardButtonElement.addEventListener("click", updateCard);
 			}
 		}
