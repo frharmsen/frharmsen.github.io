@@ -317,7 +317,7 @@ Hand.prototype.get4CardsToKeep = function() {
 	}
 
 	if (straightReturned.length == 4) {
-		if ((straightReturned[0].order < 11) && (unmatchedCard.order > 10)) {
+		if ((straightReturned[3].order < 11) && (unmatchedCard.order > 10)) {
 			return [unmatchedCard];
 		} else {
 			return straightReturned;
@@ -346,7 +346,7 @@ Hand.prototype.get3CardsToKeep = function() {
  * Keep 2 cards if the hand has a pair of face cards, has a low pair and we have
  * no face cards or we have some face cards. If we don't have a pair then keep
  * two of the face cards with the same suit of the lower face cards so that we
- * have a greater chance of a straight. Return one face card if that is all that
+ * have a greater chance of a flush. Return one face card if that is all that
  * we have.
  */
 Hand.prototype.get2CardsToKeep = function() {

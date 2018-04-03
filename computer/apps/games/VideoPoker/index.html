@@ -367,7 +367,7 @@ table, th, td {
 		function initDeck() {
 			for (var i = 0; i < Card.RANKS.length; i += 1) {
 				for (var j = 0; j < Card.SUITS.length; j += 1) {
-					deck.push(new Card(Card.RANKS[i], Card.SUITS[j], i));
+					deck.push(new Card(Card.RANKS[i], Card.SUITS[j], i + 2));
 				}
 			}
 		}
