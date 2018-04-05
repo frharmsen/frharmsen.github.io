@@ -4,7 +4,7 @@
 "use strict";
 
 /*
- * Constructor
+ * Constructor.
  */
 var Card = function(rank, suit, order) {
 	this.rank = rank;
@@ -33,17 +33,6 @@ Card.cloneCards = function(cards) {
 	}
 
 	return clonedCards;
-};
-
-Card.shuffleCards = function(cards) {
-	var cardCount = cards.length;
-
-	for (var i = 0; i < cardCount; i += 1) {
-		var target = Math.floor(Math.random() * cardCount);
-		var tmp = cards[target];
-		cards[target] = cards[i];
-		cards[i] = tmp;
-	}
 };
 
 /*

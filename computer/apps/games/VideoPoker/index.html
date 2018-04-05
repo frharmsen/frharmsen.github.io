@@ -127,17 +127,17 @@ table, th, td {
 				</tr>
 				<tr>
 					<td>Keep one card</td>
-					<td>If you have an Ace or Face Card.</td>
+					<td>If you have nothing but an Ace or Face Card.</td>
 				</tr>
 				<tr>
 					<td>Keep no cards</td>
-					<td>If you do not have an Ace or Face Card.</td>
+					<td>If you do not even have an Ace or Face Card.</td>
 				</tr>
 			</table>
 			<table id="payouts">
 				<caption>Payouts</caption>
 				<tr>
-					<td>Jacks or Better</td>
+					<td>A Pair of Jacks or Better</td>
 					<td>10.00</td>
 				<tr>
 				<tr>
@@ -176,221 +176,8 @@ table, th, td {
 		</div>
 	</div>
 	<script src="card.js"></script>
-	<script src="hand.js"></script>
-	<script>
-		"use strict";
-		const WAITING_FOR_DRAW = 0;
-		const WAITING_FOR_DEAL = 1;
-		var deck = [];
-		var hand;
-		var balance = 990;
-		var state = WAITING_FOR_DRAW;
-
-		function showCardsToKeep(cardsToKeep) {
-			var columnElement;
-			for (var i = 0; i < hand.cards.length; i+= 1) {
-				columnElement = document.getElementById("keep" + (i + 1));
-				if (cardsToKeep.indexOf(hand.cards[i]) != -1) {
-					columnElement.style.background  = "#fff59d";	
-				} else {
-					columnElement.style.background  = "#69f0ae";
-				}
-			}
-		}
-		
-		function clearResult(result) {
-			var resultSpanElement = document.getElementById("result");
-			var textNode = resultSpanElement.firstChild;
-			if (textNode) {
-				resultSpanElement.removeChild(textNode);
-			}
-		}
-
-		function showResult(result) {
-			var resultSpanElement = document.getElementById("result");
-			var textNode = document
-					.createTextNode(Hand.WINNINGS_STRINGS[result]);
-			resultSpanElement.appendChild(textNode);
-		}
-
-		function showBalance(change) {
-			var balanceSpanElement = document.getElementById("balance");
-			var textNode;
-
-			if (balanceSpanElement.firstChild) {
-				balanceSpanElement.removeChild(balanceSpanElement.firstChild);
-			}
-			balance += change;
-			textNode = document.createTextNode(balance.toFixed(2));
-			balanceSpanElement.appendChild(textNode);
-		}
-
-		function shuffleDeck() {
-			Card.shuffleCards(deck);
-		}
-
-		function sortHand() {
-			hand.cards.sort(function(card1, card2) {
-				return card1.order - card2.order;
-			});
-		}
-
-		function returnDealtCardsToDeck() {
-			for (var i = 0; i < deck.length; i += 1) {
-				deck[i].dealt = false;
-				deck[i].kept = false;
-			}
-		}
-
-		function dealHand() {
-			var cards = [];
-
-			for (var i = 0; i < 5; i += 1) {
-				cards.push(deck[i]);
-				deck[i].dealt = true;
-			}
-
-			hand = new Hand(cards);
-			sortHand();
-		}
-
-		function setKeepTextHidden(hidden) {
-			var keepTextElement;
-			var style = hidden ? "hidden" : "visible";
-
-			for (var i = 1; i <= 5; i += 1) {
-				keepTextElement = document
-						.getElementById("keep" + i.toString());
-				keepTextElement.style.visibility = style;
-			}
-		}
-
-		function refreshKeepText(hidden) {
-			var keepColumnElement;
-			var style = hidden ? "hidden" : "visible";
-
-			for (var i = 1; i <= 5; i += 1) {
-				keepColumnElement = document.getElementById("keep"
-						+ i.toString());
-				if (keepColumnElement.firstChild.data = "KEEP") {
-					keepColumnElement.removeChild(keepColumnElement.firstChild);
-					keepColumnElement.appendChild(document
-							.createTextNode("DISCARD"));
-				}
-			}
-		}
-
-		function updateCard(event) {
-			var cardNumber = Number(event.target.id
-					.charAt(event.target.id.length - 1));
-			var keepColumnElement = document.getElementById('keep'
-					+ cardNumber.toString());
-			var keepText;
-
-			cardNumber -= 1;
-			if (hand.cards[cardNumber].kept) {
-				hand.cards[cardNumber].kept = false;
-				keepColumnElement.removeChild(keepColumnElement.firstChild);
-				keepColumnElement.appendChild(document
-						.createTextNode("DISCARD"));
-			} else {
-				hand.cards[cardNumber].kept = true;
-				keepColumnElement.removeChild(keepColumnElement.firstChild);
-				keepColumnElement.appendChild(document.createTextNode("KEEP"));
-			}
-
-			event.preventDefault();
-			return false;
-
-		}
-
-		function updateSubmitButton(label) {
-			var submitButtonElement = document.getElementById("submitButton");
-			submitButtonElement.value = label;
-		}
-
-		function replaceCardsNotKept() {
-			for (var i = 0; i < hand.cards.length; i += 1) {
-				if (!(hand.cards[i].kept)) {
-					for (var j = 0; j < deck.length; j += 1) {
-						if (!(deck[j].dealt)) {
-							deck[j].dealt = true;
-							hand.cards[i] = deck[j];
-							break;
-						}
-					}
-				}
-			}
-		}
-
-		function showHand() {
-			var imageElement;
-
-			for (var i = 0; i < 5; i += 1) {
-				imageElement = document.getElementById("card" + (i + 1));
-				imageElement.setAttribute("src", "images/" + hand.cards[i].rank
-						+ hand.cards[i].suit + ".png");
-			}
-		}
-
-		function updateHand(event) {
-			var result;
-
-			if (state === WAITING_FOR_DRAW) {
-				replaceCardsNotKept();
-				sortHand();
-				showHand();
-				result = hand.getWinnings();
-				showResult(result);
-				showBalance(Hand.WINNINGS_VALUES[result]);
-				updateSubmitButton("DEAL");
-				setKeepTextHidden(true);
-				refreshKeepText();
-				state = WAITING_FOR_DEAL;
-			} else {
-				returnDealtCardsToDeck();
-				shuffleDeck();
-				dealHand();
-				showHand();
-				showCardsToKeep(hand.getCardsToKeep());
-				updateSubmitButton("DRAW");
-				setKeepTextHidden(false);
-				showBalance(-10);
-				clearResult();
-				state = WAITING_FOR_DRAW;
-			}
-
-			event.preventDefault();
-			return false;
-		}
-
-		function initDeck() {
-			for (var i = 0; i < Card.RANKS.length; i += 1) {
-				for (var j = 0; j < Card.SUITS.length; j += 1) {
-					deck.push(new Card(Card.RANKS[i], Card.SUITS[j], i + 2));
-				}
-			}
-		}
-
-		function init() {
-			var submitButtonElement = document.getElementById("submitButton");
-			var cardButtonElement;
-
-			initDeck();
-			shuffleDeck();
-			dealHand();
-			showHand();
-			showBalance(0);
-			showCardsToKeep(hand.getCardsToKeep());
-			submitButtonElement.addEventListener("click", updateHand);
-			for (var i = 0; i < 5; i += 1) {
-				cardButtonElement = document.getElementById("cardButton"
-						+ (i + 1));
-				cardButtonElement.addEventListener("click", updateCard);
-			}
-		}
-
-		window.addEventListener("load", init);
-	</script>
+	<script src="deck.js"></script>
+	<script src="hand.js"></script>	
+	<script src="main.js"></script>
 </body>
 </html>
