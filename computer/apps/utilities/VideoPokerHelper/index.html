@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Video Poker Helper</title>
+<style>
+td {
+	text-align: center;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+select {
+	width: 100%
+}
+
+#submitButton, #resetButton {
+	width: 100%
+}
+</style>
+</head>
+<body>
+	<div id="main">
+		<form method="post" action="index.html">
+			<table id="cardTable">
+				<tr>
+					<td>Rank</td>
+					<td><select name="r1" id="r1">
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="T">10</option>
+							<option value="J">Jack</option>
+							<option value="Q">Queen</option>
+							<option value="K">King</option>
+							<option value="A">Ace</option>
+					</select></td>
+					<td><select name="r2" id="r2">
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="T">10</option>
+							<option value="J">Jack</option>
+							<option value="Q">Queen</option>
+							<option value="K">King</option>
+							<option value="A">Ace</option>
+					</select></td>
+					<td><select name="r3" id="r3">
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="T">10</option>
+							<option value="J">Jack</option>
+							<option value="Q">Queen</option>
+							<option value="K">King</option>
+							<option value="A">Ace</option>
+					</select></td>
+					<td><select name="r4" id="r4">
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="T">10</option>
+							<option value="J">Jack</option>
+							<option value="Q">Queen</option>
+							<option value="K">King</option>
+							<option value="A">Ace</option>
+					</select></td>
+					<td><select name="r5" id="r5">
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="T">10</option>
+							<option value="J">Jack</option>
+							<option value="Q">Queen</option>
+							<option value="K">King</option>
+							<option value="A">Ace</option>
+					</select></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td>Suit</td>
+					<td><select name="s1" id="s1">
+							<option value="C">Club</option>
+							<option value="D">Diamond</option>
+							<option value="H">Heart</option>
+							<option value="S">Spade</option>
+					</select></td>
+					<td><select name="s2" id="s2">
+							<option value="C">Club</option>
+							<option value="D">Diamond</option>
+							<option value="H">Heart</option>
+							<option value="S">Spade</option>
+					</select></td>
+					<td><select name="s3" id="s3">
+							<option value="C">Club</option>
+							<option value="D">Diamond</option>
+							<option value="H">Heart</option>
+							<option value="S">Spade</option>
+					</select></td>
+					<td><select name="s4" id="s4">
+							<option value="C">Club</option>
+							<option value="D">Diamond</option>
+							<option value="H">Heart</option>
+							<option value="S">Spade</option>
+					</select></td>
+					<td><select name="s5" id="S5">
+							<option value="C">Club</option>
+							<option value="D">Diamond</option>
+							<option value="H">Heart</option>
+							<option value="S">Spade</option>
+					</select></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td>Kept</td>
+					<td><span id="kept1"></span></td>
+					<td><span id="kept2"></span></td>
+					<td><span id="kept3"></span></td>
+					<td><span id="kept4"></span></td>
+					<td><span id="kept5"></span></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td colspan="6"><input type="submit" value="Calculate"
+						id="submitButton"></td>
+				<tr>
+				<tr>
+					<td colspan="6"><input type="reset" value="Reset"
+						id="resetButton"></td>
+				<tr>
+			</table>
+		</form>
+	</div>
+	<div id="results"></div>
+	<script src="https://frharmsen.github.io/lib/cards/card.js"></script>
+	<script src="https://frharmsen.github.io/lib/cards/deck.js"></script>
+	<script src="https://frharmsen.github.io/lib/cards/hand.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
