@@ -52,13 +52,13 @@ function setKeepTextHidden(hidden) {
 
 function refreshKeepText(hidden) {
 	var keepColumnElement;
-	var style = hidden ? "hidden" : "visible";
 
 	for (var i = 1; i <= 5; i += 1) {
 		keepColumnElement = document.getElementById("keep" + i.toString());
 		if (keepColumnElement.firstChild.data = "KEEP") {
 			keepColumnElement.removeChild(keepColumnElement.firstChild);
 			keepColumnElement.appendChild(document.createTextNode("DISCARD"));
+			keepColumnElement.style.background = "#69f0ae";
 		}
 	}
 }
@@ -75,10 +75,12 @@ function updateCard(event) {
 			hand.cards[cardNumber].kept = false;
 			keepColumnElement.removeChild(keepColumnElement.firstChild);
 			keepColumnElement.appendChild(document.createTextNode("DISCARD"));
+			keepColumnElement.style.background = "#69f0ae";
 		} else {
 			hand.cards[cardNumber].kept = true;
 			keepColumnElement.removeChild(keepColumnElement.firstChild);
 			keepColumnElement.appendChild(document.createTextNode("KEEP"));
+			keepColumnElement.style.background = "#fff59d";
 		}
 	} catch (exception) {
 		console.log(exception);
