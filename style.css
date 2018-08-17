@@ -2,11 +2,6 @@
 
 body {
 	background-color: Peru;
-        text-align: center;
-}
-
-nav {
-	display: inline-block;
 }
 
 li {
@@ -17,7 +12,7 @@ li a {
 	display: block;
 	margin: 5px 5px 5px 5px;
 	padding: 5px 5px;
-	width: 300px;
+	width: 200px;
 	background-color: BurlyWood;
 	color: Black;
 	border-color: Black;
