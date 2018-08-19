@@ -483,6 +483,7 @@ var menu ={
 		{url: "bbc", label: "BBC News Menu >"},
 		{url: "cbc", label: "CBC News Menu >"},
 		{url: "ctv", label: "CTV News Menu >"},
+		{url: "weather", label: "Weather >"},
 		{url: "https://news.ycombinator.com/", label: "Hacker News"},
 		{url: "https://www.lfpress.com/", label: "London Free Press"},
 		{url: "https://news.nationalpost.com/category/news/world", label: "National Post"},
