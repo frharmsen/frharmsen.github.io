@@ -483,6 +483,7 @@ var menu ={
 		{url: "bbc", label: "BBC News Menu >"},
 		{url: "cbc", label: "CBC News Menu >"},
 		{url: "ctv", label: "CTV News Menu >"},
+		{url: "reddit", label: "Reddit >"},
 		{url: "weather", label: "Weather >"},
 		{url: "https://news.ycombinator.com/", label: "Hacker News"},
 		{url: "https://www.lfpress.com/", label: "London Free Press"},
@@ -512,6 +513,12 @@ var menu ={
 		{url: "https://london.ctvnews.ca/", label: "CTV News - London"},
 		{url: "https://www.ctvnews.ca/sci-tech", label: "CTV News - Science and Technology"},
 		{url: "https://www.ctvnews.ca/world", label: "CTV News - World News"},
+        ],
+	reddit: [
+		{url: "news", label: "< News Menu"},
+		{url: "https://www.reddit.com/r/canada/", label: "Canada"},
+		{url: "https://www.reddit.com/r/science/", label: "Science"},
+		{url: "https://www.reddit.com/r/worldnews/", label: "World News"},
 	],
 	weather: [
 		{url: "news", label: "< News Menu"},
