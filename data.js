@@ -34,6 +34,7 @@ var menu ={
 	myutilities: [
 		{url: "apps", label: "< Apps Menu"},
 		{url: "computer/apps/utilities/ScoreKeeper/index.html", label: "ScoreKeeper"},
+		{url: "computer/apps/utilities/Calculator/index.html", label: "Calculator"},
 		{url: "computer/apps/utilities/VideoPokerHelper/index.html", label: "VideoPokerHelper"},
 	],
 	latex: [
@@ -573,7 +574,6 @@ var menu ={
 		{url: "https://www.google.ca/?gfe_rd=cr&ei=bfT3V7DnNM3AqAXFqqWgDg", label: "Google"},
 		{url: "https://www.startpage.com/", label: "StartPage"},
 		{url: "https://en.wikipedia.org/wiki/Main_Page", label: "Wikipedia"},
-		{url: "https://en.m.wikipedia.org/wiki/Main_Page", label: "Wikipedia - Mobile"},
 		{url: "https://ca.search.yahoo.com/", label: "Yahoo Search"},
 	],
 	services: [
