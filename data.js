@@ -309,7 +309,6 @@ var menu ={
 		{url: "http://www.freetechbooks.com/", label: "Database of Free Online Computer Science and Programming Books, Textbooks, and Lecture Notes"},
 		{url: "http://freecomputerbooks.com/", label: "Free Computer, Programming, Mathematics, Technical Books, Lecture Notes and Tutorials"},
 		{url: "http://www.onlineprogrammingbooks.com/", label: "Free Computer Books : IT, Programming and Computer Science"},
-		{url: "http://www.snipfiles.com/", label: "FREE EBOOKS  SOFTWARE DOWNLOADS SNIPFILES.COM"},
 		{url: "http://www.ebooklobby.com/", label: "Free ebooks"},
 		{url: "http://kickjava.com/books/", label: "KickJava.com  7,500 Free Computer Books Tag Cloud _ Java API By Example, From Geeks To Geeks."},
 	],
