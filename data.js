@@ -71,6 +71,7 @@ var menu ={
 		{url: "challenges", label: "Challenges Menu >"},
 		{url: "database", label: "Database Menu >"},
 		{url: "general", label: "General Menu >"},
+		{url: "golang", label: "Go Menu >"},
 		{url: "java", label: "Java Menu >"},
 		{url: "javascript", label: "JavaScript Menu >"},
 		{url: "mobile", label: "Mobile Menu >"},
@@ -119,6 +120,10 @@ var menu ={
 		{url: "https://github.com/", label: "GitHub"},
 		{url: "https://stackoverflow.com/", label: "Stack Overflow"},
 		{url: "http://tnerual.eriogerg.free.fr/vimqrc.html", label: "VIM Quick Reference Card"},
+	],
+	golang: [
+		{url: "programming", label: "< Programming Menu"},
+		{url: "https://golang.org/", label: "golang.org"},
 	],
 	java: [
 		{url: "programming", label: "< Programming Menu"},
