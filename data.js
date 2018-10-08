@@ -124,6 +124,7 @@ var menu ={
 	golang: [
 		{url: "programming", label: "< Programming Menu"},
 		{url: "https://golang.org/", label: "golang.org"},
+                {url: "https://yourbasic.org/golang/", label: "Your basic Go"},
 	],
 	java: [
 		{url: "programming", label: "< Programming Menu"},
