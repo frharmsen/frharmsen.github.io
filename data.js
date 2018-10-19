@@ -265,6 +265,7 @@ var menu ={
 		{url: "http://stthomas.ca/content/construction-projects/", label: "City of St Thomas - Construction Projects"},
 		{url: "http://www.elgincounty.ca/", label: "Elgin County"},
 		{url: "http://www.elgincounty.ca/archives", label: "Elgin County - Archives"},
+                {url: "https://lynhurst.condocommunities.com/communities/login/", label: "Elgin Vacant Land Condominium Corporation No. 31"},
 		{url: "http://www.southwold.ca/", label: "Southwold"},
 		{url: "https://stthomaspubliclibrary.ca/", label: "St. Thomas Public Library"},
 		{url: "http://trackmyplow.com/", label: "Track My Plow"},
