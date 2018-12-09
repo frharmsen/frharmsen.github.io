@@ -121,11 +121,6 @@ var menu ={
 		{url: "https://stackoverflow.com/", label: "Stack Overflow"},
 		{url: "http://tnerual.eriogerg.free.fr/vimqrc.html", label: "VIM Quick Reference Card"},
 	],
-	golang: [
-		{url: "programming", label: "< Programming Menu"},
-		{url: "https://golang.org/", label: "golang.org"},
-                {url: "https://yourbasic.org/golang/", label: "Your basic Go"},
-	],
 	java: [
 		{url: "programming", label: "< Programming Menu"},
 		{url: "http://commons.apache.org/", label: "Apache Commons"},
@@ -260,15 +255,11 @@ var menu ={
 		{url: "http://centralelgin.civicwebcms.com/content/council", label: "Central Elgin - Council"},
 		{url: "https://centralelgin.civicweb.net/filepro/documents", label: "Central Elgin - Documents"},
 		{url: "https://www.centralelgin.org/en/municipal-office/municipal-office.aspx#", label: "Central Elgin - Municipal Office "},
-		{url: "https://www.london.ca/residents/Roads-Transportation/Road-Construction/Pages/RoadReport.aspx", label: "City of London - Road Report"},
-		{url: "http://stthomas.ca/", label: "City of St. Thomas"},
-		{url: "http://stthomas.ca/content/construction-projects/", label: "City of St Thomas - Construction Projects"},
+		{url: "https://www.stthomas.ca/", label: "City of St. Thomas"},
 		{url: "http://www.elgincounty.ca/", label: "Elgin County"},
 		{url: "http://www.elgincounty.ca/archives", label: "Elgin County - Archives"},
                 {url: "https://lynhurst.condocommunities.com/communities/login/", label: "Elgin Vacant Land Condominium Corporation No. 31"},
 		{url: "http://www.southwold.ca/", label: "Southwold"},
-		{url: "https://stthomaspubliclibrary.ca/", label: "St. Thomas Public Library"},
-		{url: "http://trackmyplow.com/", label: "Track My Plow"},
 	],
 	health: [
 		{url: "main", label: "< Main Menu"},
