@@ -121,7 +121,11 @@ var menu ={
 		{url: "https://stackoverflow.com/", label: "Stack Overflow"},
 		{url: "http://tnerual.eriogerg.free.fr/vimqrc.html", label: "VIM Quick Reference Card"},
 	],
-	java: [
+	golang: [
+		{url: "programming", label: "< Programming Menu"},
+		{url: "https://golang.org/", label: "golang.org"},
+	],
+        java: [
 		{url: "programming", label: "< Programming Menu"},
 		{url: "http://commons.apache.org/", label: "Apache Commons"},
 		{url: "http://maven.apache.org/", label: "Apache Maven"},
