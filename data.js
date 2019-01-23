@@ -123,6 +123,8 @@ var menu ={
 	],
 	golang: [
 		{url: "programming", label: "< Programming Menu"},
+                {url: "https://github.com/golang/go", label: "go source code"},
+                {url: "https://github.com/go-ini/ini", label: "go-ini"},
 		{url: "https://golang.org/", label: "golang.org"},
 	],
         java: [
