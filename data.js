@@ -383,7 +383,7 @@ var menu ={
 		{url: "reddit", label: "Reddit >"},
 		{url: "weather", label: "Weather >"},
 		{url: "https://news.ycombinator.com/", label: "Hacker News"},
-		{url: "https://www.lfpress.com/", label: "London Free Press"},
+		{url: "https://lfpress.com/", label: "London Free Press"},
 		{url: "https://news.nationalpost.com/category/news/world", label: "National Post"},
 		{url: "https://www.sciencedaily.com/", label: "ScienceDaily"},
 		{url: "https://slashdot.org/", label: "Slashdot"},
