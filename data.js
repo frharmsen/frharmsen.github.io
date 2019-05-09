@@ -12,15 +12,7 @@ var menu ={
 		{url: "social", label: "Social Menu >"},
 		{url: "unclassified", label: "Unclassified Menu >"},
 	],
-	computer: [
-		{url: "main", label: "< Main Menu"},
-		{url: "apps", label: "Apps Menu >"},
-		{url: "latex", label: "LaTeX Menu >"},
-		{url: "linux", label: "Linux Menu >"},
-		{url: "privacy", label: "Privacy Menu >"},
-		{url: "programming", label: "Progamming Menu >"},
-		{url: "unix", label: "Unix Menu >"},
-	],
+
 	apps: [
 		{url: "computer", label: "< Computer Menu"},
 		{url: "mygames", label: "Games Menu >"},
@@ -225,6 +217,7 @@ var menu ={
 	],
 	entertainment: [
 		{url: "main", label: "< Main Menu"},
+		{url: "radio", label: "Radio Menu >"},
 		{url: "http://awoiaf.westeros.org/index.php/", label: "A Wiki of Ice and Fire"},
 		{url: "http://agt.wikia.com/wiki/America%27s_Got_Talent_Wiki", label: "America's Got Talent Wiki "},
 		{url: "http://bgt.wikia.com/wiki/Wiki_Content", label: "Britain's Got Talent Wiki"},
@@ -236,7 +229,12 @@ var menu ={
 		{url: "https://www.youtube.com/", label: "YouTube"},
 		{url: "http://zap2it.com/", label: "Zap2It"},
 	],
-	family: [
+	radio: [
+		{url: "entertainment", label: "< Entertainment Menu"},
+		{url: "https://classicrock981.com/", label: "Classic Radio 98.1"},
+		{url: "https://www.jack1023.com/", label: "Jack 102.3"},
+	],	
+        family: [
 		{url: "main", label: "< Main Menu"},
 		{url: "https://bettyharmsen.github.io", label: "Betty's Favourite Links"},
 		{url: "https://hharmsen.github.io", label: "Henry's Favourite Links"},
