@@ -68,6 +68,7 @@ var menu ={
 	programming: [
 		{url: "computer", label: "< Computer Menu"},
 		{url: "c", label: "C Menu >"},
+		{url: "csharp", label: "C# Menu >"},
 		{url: "challenges", label: "Challenges Menu >"},
 		{url: "database", label: "Database Menu >"},
 		{url: "general", label: "General Menu >"},
@@ -102,6 +103,10 @@ var menu ={
 		{url: "https://www.gtk.org/", label: "The GTK+ Project"},
 		{url: "http://web.mit.edu/ghudson/dev/nokrb/third/libxml2/doc", label: "The XML C parser and toolkit of Gnome"},
 	],
+	csharp: [
+		{url: "programming", label: "< Programming Menu"},
+		{url: "https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/", label: "C# Reference"},
+        ],
 	challenges: [
 		{url: "programming", label: "< Programming Menu"},
 		{url: "https://projecteuler.net/", label: "Project Euler"},
