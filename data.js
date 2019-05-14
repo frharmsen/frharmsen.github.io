@@ -12,7 +12,15 @@ var menu ={
 		{url: "social", label: "Social Menu >"},
 		{url: "unclassified", label: "Unclassified Menu >"},
 	],
-
+	computer: [
+		{url: "main", label: "< Main Menu"},
+		{url: "apps", label: "Apps Menu >"},
+		{url: "latex", label: "LaTeX Menu >"},
+		{url: "linux", label: "Linux Menu >"},
+		{url: "privacy", label: "Privacy Menu >"},
+		{url: "programming", label: "Progamming Menu >"},
+		{url: "unix", label: "Unix Menu >"},
+	],
 	apps: [
 		{url: "computer", label: "< Computer Menu"},
 		{url: "mygames", label: "Games Menu >"},
